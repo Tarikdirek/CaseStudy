@@ -2,12 +2,14 @@ package org.tarik.casestudy.entities.concretes;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@Data
 public class User {
 
     @Id
