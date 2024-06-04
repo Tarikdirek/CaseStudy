@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class GetAllUsersResponse {
     private int id;
+    private int roleId;
     private String username;
     private String password;
-    private String roleId;
     private String roleName;
 }
 

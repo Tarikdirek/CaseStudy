@@ -1,5 +1,6 @@
 package org.tarik.casestudy.services.dtos.role.requests;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class AddRoleRequest {
     @NotNull
-    @Size(min = 4, max = 50 , message = "Role name must be between 4 and 50 characters")
+    @Size(min = 2, max = 50 , message = "Role name must be between 4 and 50 characters")
     private String name;
+
     private String description;
+
 }

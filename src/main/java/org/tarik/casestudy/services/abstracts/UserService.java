@@ -12,6 +12,8 @@ public interface UserService {
     void add(AddUserRequest addUserRequest);
     void update(UpdateUserRequest updateUserRequest);
     void delete(DeleteUserRequest deleteUserRequest);
+    void assignRoleToUser(int managerId,int userId, int roleId);
+    void removeRoleFromUser(int managerId, int assignUser);
 
     List<GetAllUsersResponse> getAll();
     GetUserByIdResponse getById(int id);

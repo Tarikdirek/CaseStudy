@@ -12,8 +12,6 @@ public interface RoleService {
     void add(AddRoleRequest addRoleRequest);
     void update(UpdateRoleRequest updateRoleRequest);
     void delete(DeleteRoleRequest deleteRoleRequest);
-    void assignRoleToUser(int userId,int assignedUser, int roleId);
-    void removeRoleFromUser(int userId, int roleId,int assignUser);
 
     List<GetAllRolesResponse> getAll();
     GetRoleByIdResponse getById(int id);
