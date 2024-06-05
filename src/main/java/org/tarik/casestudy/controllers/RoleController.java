@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("api/v1/roles")
 @AllArgsConstructor
 @CrossOrigin
-public class RolesController {
+public class RoleController {
     private final RoleService roleService;
 
     @PostMapping("/add")

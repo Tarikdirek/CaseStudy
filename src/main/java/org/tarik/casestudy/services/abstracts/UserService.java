@@ -1,10 +1,9 @@
 package org.tarik.casestudy.services.abstracts;
 
-import org.tarik.casestudy.services.dtos.user.requests.AddUserRequest;
-import org.tarik.casestudy.services.dtos.user.requests.DeleteUserRequest;
-import org.tarik.casestudy.services.dtos.user.requests.UpdateUserRequest;
+import org.tarik.casestudy.services.dtos.user.requests.*;
 import org.tarik.casestudy.services.dtos.user.responses.GetAllUsersResponse;
 import org.tarik.casestudy.services.dtos.user.responses.GetUserByIdResponse;
+import org.tarik.casestudy.services.dtos.user.responses.GetUserByNameResponse;
 
 import java.util.List;
 
@@ -12,9 +11,11 @@ public interface UserService {
     void add(AddUserRequest addUserRequest);
     void update(UpdateUserRequest updateUserRequest);
     void delete(DeleteUserRequest deleteUserRequest);
-    void assignRoleToUser(int managerId,int userId, int roleId);
-    void removeRoleFromUser(int managerId, int assignUser);
+    void assignRoleToUser(AssignRoleToUserRequest request);
+    void removeRoleFromUser(RemoveRoleFromUserRequest request);
+
 
     List<GetAllUsersResponse> getAll();
     GetUserByIdResponse getById(int id);
+    GetUserByNameResponse getByName(String name);
 }

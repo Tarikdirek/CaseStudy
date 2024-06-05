@@ -3,9 +3,7 @@ package org.tarik.casestudy.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.tarik.casestudy.services.abstracts.UserService;
-import org.tarik.casestudy.services.dtos.user.requests.AddUserRequest;
-import org.tarik.casestudy.services.dtos.user.requests.DeleteUserRequest;
-import org.tarik.casestudy.services.dtos.user.requests.UpdateUserRequest;
+import org.tarik.casestudy.services.dtos.user.requests.*;
 import org.tarik.casestudy.services.dtos.user.responses.GetAllUsersResponse;
 import org.tarik.casestudy.services.dtos.user.responses.GetUserByIdResponse;
 
@@ -15,30 +13,30 @@ import java.util.List;
 @RequestMapping("api/v1/users")
 @AllArgsConstructor
 @CrossOrigin
-public class UsersController {
+public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public void add(AddUserRequest addUserRequest) {
+    public void add(@RequestBody AddUserRequest addUserRequest) {
         userService.add(addUserRequest);
     }
     @PutMapping("/update")
-    public void update(UpdateUserRequest updateUserRequest) {
+    public void update(@RequestBody UpdateUserRequest updateUserRequest) {
         userService.update(updateUserRequest);
     }
     @DeleteMapping("/delete")
-    public void delete(DeleteUserRequest deleteUserRequest) {
+    public void delete(@RequestBody DeleteUserRequest deleteUserRequest) {
         userService.delete(deleteUserRequest);
     }
 
     @PostMapping("/assignroletouser")
-    public void assignRoleToUser(int managerId,int userId, int roleId) {
-        userService.assignRoleToUser(managerId,userId,roleId);
+    public void assignRoleToUser(@RequestBody AssignRoleToUserRequest request) {
+        userService.assignRoleToUser(request);
     }
 
     @DeleteMapping("/removerolefromuser")
-    public void removeRoleFromUser(int managerId,int assignUser) {
-        userService.removeRoleFromUser(managerId, assignUser);
+    public void removeRoleFromUser(@RequestBody RemoveRoleFromUserRequest request) {
+        userService.removeRoleFromUser(request);
     }
     @GetMapping("/getall")
     public List<GetAllUsersResponse> getAll() {
