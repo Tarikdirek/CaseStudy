@@ -1,6 +1,8 @@
 package org.tarik.casestudy.services.concretes;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.tarik.casestudy.core.utilies.mappers.ModelMapperService;
 import org.tarik.casestudy.entities.concretes.Role;
@@ -113,5 +115,13 @@ public class UserManager implements UserService {
         if (!manager.getRole().getName().equals("manager")) {
             throw  new RuntimeException(Messages.USER_IS_NOT_A_MANAGER);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        var user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new RuntimeException(Messages.USER_NOT_FOUND));
+        return user;
     }
 }

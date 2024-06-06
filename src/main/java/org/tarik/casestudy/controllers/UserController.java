@@ -6,6 +6,7 @@ import org.tarik.casestudy.services.abstracts.UserService;
 import org.tarik.casestudy.services.dtos.user.requests.*;
 import org.tarik.casestudy.services.dtos.user.responses.GetAllUsersResponse;
 import org.tarik.casestudy.services.dtos.user.responses.GetUserByIdResponse;
+import org.tarik.casestudy.services.dtos.user.responses.GetUserByNameResponse;
 
 import java.util.List;
 
@@ -45,5 +46,9 @@ public class UserController {
     @GetMapping("/getbyid")
     public GetUserByIdResponse getById(int id) {
         return userService.getById(id);
+    }
+    @GetMapping("/getbyname")
+    public GetUserByNameResponse getByName(String name) {
+        return userService.getByName(name);
     }
 }
