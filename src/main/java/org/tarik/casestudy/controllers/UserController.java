@@ -35,7 +35,7 @@ public class UserController {
         userService.assignRoleToUser(request);
     }
 
-    @DeleteMapping("/removerolefromuser")
+    @PostMapping("/removerolefromuser")
     public void removeRoleFromUser(@RequestBody RemoveRoleFromUserRequest request) {
         userService.removeRoleFromUser(request);
     }
