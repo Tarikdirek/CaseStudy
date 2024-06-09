@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.tarik.casestudy.core.utilies.mappers.ModelMapperService;
+import org.tarik.casestudy.core.utilities.exceptions.BusinessException;
+import org.tarik.casestudy.core.utilities.mappers.ModelMapperService;
 import org.tarik.casestudy.entities.concretes.Role;
 import org.tarik.casestudy.entities.concretes.User;
 import org.tarik.casestudy.repositories.UserRepository;
@@ -93,7 +94,7 @@ public class UserManager implements UserService {
     public GetUserByNameResponse getByName(String name) {
         var user = userRepository
                 .findByUsername(name)
-                .orElseThrow(() -> new RuntimeException(Messages.USER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(Messages.USER_NOT_FOUND));
         return modelMapperService
                 .forResponse()
                 .map(user, GetUserByNameResponse.class);
@@ -103,17 +104,17 @@ public class UserManager implements UserService {
     private void checkIfUserExists(String username) {
         var users = getAll();
         if (users.stream().anyMatch(user -> user.getUsername().equals(username))) {
-            throw new RuntimeException(Messages.USER_ALREADY_EXISTS);
+            throw new BusinessException(Messages.USER_ALREADY_EXISTS);
         }
     }
 
     private User getUser(int id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException(Messages.USER_NOT_FOUND));
+        return userRepository.findById(id).orElseThrow(() -> new BusinessException(Messages.USER_NOT_FOUND));
     }
     private void checkIsUserAManager(int managerId) {
         var manager = userRepository.findById(managerId).orElseThrow();
         if (!manager.getRole().getName().equals("manager")) {
-            throw  new RuntimeException(Messages.USER_IS_NOT_A_MANAGER);
+            throw  new BusinessException(Messages.USER_IS_NOT_A_MANAGER);
         }
     }
 
@@ -121,7 +122,7 @@ public class UserManager implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new RuntimeException(Messages.USER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(Messages.USER_NOT_FOUND));
         return user;
     }
 }

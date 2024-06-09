@@ -1,4 +1,4 @@
-package org.tarik.casestudy.core.utilies.mappers;
+package org.tarik.casestudy.core.utilities.mappers;
 import org.modelmapper.ModelMapper;
 public interface ModelMapperService {
     ModelMapper forResponse();

@@ -6,4 +6,6 @@ public class Messages {
     public static final String USER_NOT_FOUND = "User not found";
     public static final String USER_ALREADY_EXISTS = "User already exists";
     public static final String USER_IS_NOT_A_MANAGER = "User is not a manager";
+    public static final String VALIDATION_EXCEPTION = "VALIDATION_EXCEPTION";
+
 }

@@ -1,5 +1,6 @@
 package org.tarik.casestudy.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.tarik.casestudy.services.abstracts.AuthService;
@@ -15,12 +16,12 @@ public class AuthenticationController {
     private final AuthService authenticationService;
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+    public AuthenticationResponse login(@RequestBody @Valid LoginRequest loginRequest) {
        return authenticationService.login(loginRequest);
     }
 
     @PostMapping("/register")
-    public AuthenticationResponse register(@RequestBody RegisterRequest registerRequest) {
+    public AuthenticationResponse register(@RequestBody @Valid RegisterRequest registerRequest) {
        return authenticationService.register(registerRequest);
     }
 }

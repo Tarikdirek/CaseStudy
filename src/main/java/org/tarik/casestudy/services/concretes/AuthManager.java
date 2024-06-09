@@ -6,13 +6,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.tarik.casestudy.core.services.JwtService;
-import org.tarik.casestudy.core.utilies.mappers.ModelMapperService;
+import org.tarik.casestudy.core.utilities.mappers.ModelMapperService;
 import org.tarik.casestudy.entities.concretes.Role;
 import org.tarik.casestudy.entities.concretes.User;
 import org.tarik.casestudy.services.abstracts.AuthService;
 import org.tarik.casestudy.services.abstracts.RoleService;
 import org.tarik.casestudy.services.abstracts.UserService;
-import org.tarik.casestudy.services.constants.Messages;
 import org.tarik.casestudy.services.dtos.authentication.requests.LoginRequest;
 import org.tarik.casestudy.services.dtos.authentication.requests.RegisterRequest;
 import org.tarik.casestudy.services.dtos.authentication.responses.AuthenticationResponse;

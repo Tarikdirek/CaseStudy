@@ -2,7 +2,8 @@ package org.tarik.casestudy.services.concretes;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.tarik.casestudy.core.utilies.mappers.ModelMapperService;
+import org.tarik.casestudy.core.utilities.exceptions.BusinessException;
+import org.tarik.casestudy.core.utilities.mappers.ModelMapperService;
 import org.tarik.casestudy.entities.concretes.Role;
 import org.tarik.casestudy.repositories.RoleRepository;
 import org.tarik.casestudy.services.abstracts.RoleService;
@@ -33,7 +34,7 @@ public class RoleManager implements RoleService {
     @Override
     public void update(UpdateRoleRequest updateRoleRequest) {
              roleRepository.findById(updateRoleRequest.getId())
-                .orElseThrow(() -> new RuntimeException(Messages.ROLE_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(Messages.ROLE_NOT_FOUND));
         Role roleToUpdate = this.modelMapperService.forRequest().map(updateRoleRequest, Role.class);
         roleRepository.save(roleToUpdate);
     }
@@ -41,7 +42,7 @@ public class RoleManager implements RoleService {
     @Override
     public void delete(DeleteRoleRequest deleteRoleRequest) {
         Role roleToDelete = roleRepository.findById(deleteRoleRequest.getId())
-                .orElseThrow(() -> new RuntimeException(Messages.ROLE_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(Messages.ROLE_NOT_FOUND));
          roleRepository.delete(roleToDelete);
     }
 
@@ -60,7 +61,7 @@ public class RoleManager implements RoleService {
     @Override
     public GetRoleByIdResponse getById(int id) {
         var role = roleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException(Messages.ROLE_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(Messages.ROLE_NOT_FOUND));
         return  modelMapperService.forResponse()
                 .map(role, GetRoleByIdResponse.class);
 
@@ -69,7 +70,7 @@ public class RoleManager implements RoleService {
     private void checkIfRoleExists(String roleName) {
         var roles = getAll();
         if (roles.stream().anyMatch(role -> role.getName().equals(roleName))) {
-            throw new RuntimeException(Messages.ROLE_ALREADY_EXISTS);
+            throw new BusinessException(Messages.ROLE_ALREADY_EXISTS);
         }
     }
 

@@ -1,5 +1,6 @@
 package org.tarik.casestudy.controllers;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.tarik.casestudy.services.abstracts.UserService;
@@ -18,25 +19,25 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public void add(@RequestBody AddUserRequest addUserRequest) {
+    public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
         userService.add(addUserRequest);
     }
     @PutMapping("/update")
-    public void update(@RequestBody UpdateUserRequest updateUserRequest) {
+    public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
         userService.update(updateUserRequest);
     }
     @DeleteMapping("/delete")
-    public void delete(@RequestBody DeleteUserRequest deleteUserRequest) {
+    public void delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
         userService.delete(deleteUserRequest);
     }
 
     @PostMapping("/assignroletouser")
-    public void assignRoleToUser(@RequestBody AssignRoleToUserRequest request) {
+    public void assignRoleToUser(@RequestBody @Valid AssignRoleToUserRequest request) {
         userService.assignRoleToUser(request);
     }
 
     @PostMapping("/removerolefromuser")
-    public void removeRoleFromUser(@RequestBody RemoveRoleFromUserRequest request) {
+    public void removeRoleFromUser(@RequestBody @Valid RemoveRoleFromUserRequest request) {
         userService.removeRoleFromUser(request);
     }
     @GetMapping("/getall")

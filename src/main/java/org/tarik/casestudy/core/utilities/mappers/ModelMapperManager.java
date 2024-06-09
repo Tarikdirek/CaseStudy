@@ -1,4 +1,4 @@
-package org.tarik.casestudy.core.utilies.mappers;
+package org.tarik.casestudy.core.utilities.mappers;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
