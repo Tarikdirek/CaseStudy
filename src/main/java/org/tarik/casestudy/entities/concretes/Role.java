@@ -1,9 +1,11 @@
 package org.tarik.casestudy.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 @Data
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +25,14 @@ public class Role {
 
     @Column(name = "description")
     private String description;
+
     @OneToMany (mappedBy = "role")
+    @JsonIgnore
     private List<User> users;
+
+
+    @Override
+    public String getAuthority() {
+        return  name;
+    }
 }

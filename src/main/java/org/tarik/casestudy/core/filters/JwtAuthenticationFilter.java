@@ -1,7 +1,6 @@
 package org.tarik.casestudy.core.filters;
 
 import org.tarik.casestudy.core.services.JwtService;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

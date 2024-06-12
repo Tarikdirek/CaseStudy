@@ -17,6 +17,11 @@ import org.tarik.casestudy.services.dtos.user.requests.*;
 import org.tarik.casestudy.services.dtos.user.responses.GetAllUsersResponse;
 import org.tarik.casestudy.services.dtos.user.responses.GetUserByIdResponse;
 import org.tarik.casestudy.services.dtos.user.responses.GetUserByNameResponse;
+import org.tarik.casestudy.services.mappers.userMappers.requests.AddUserRequestMapper;
+import org.tarik.casestudy.services.mappers.userMappers.requests.UpdateUserRequestMapper;
+import org.tarik.casestudy.services.mappers.userMappers.responses.GetAllUserResponseMapper;
+import org.tarik.casestudy.services.mappers.userMappers.responses.GetUserByIdResponseMapper;
+import org.tarik.casestudy.services.mappers.userMappers.responses.GetUserByNameResponseMapper;
 
 import java.util.List;
 @Service
@@ -25,10 +30,16 @@ public class UserManager implements UserService {
     private final ModelMapperService modelMapperService;
     private final UserRepository userRepository;
     private final RoleService roleService;
+    private final AddUserRequestMapper addUserRequestMapper;
+    private final GetUserByIdResponseMapper getUserByIdResponseMapper;
+    private final GetAllUserResponseMapper getAllUserResponseMapper;
+    private final GetUserByNameResponseMapper getUserByNameResponseMapper;
+    private final UpdateUserRequestMapper updateUserRequestMapper;
+
     @Override
     public void add(AddUserRequest addUserRequest) {
         checkIfUserExists(addUserRequest.getUsername());
-        User user = modelMapperService.forRequest().map(addUserRequest, User.class);
+        User user = addUserRequestMapper.addUserRequestDtoToUser(addUserRequest);
         userRepository.save(user);
     }
 
@@ -37,7 +48,7 @@ public class UserManager implements UserService {
     @Override
     public void update(UpdateUserRequest updateUserRequest) {
         User userToUpdate = getUser(updateUserRequest.getId());
-        User user =  modelMapperService.forRequest().map(updateUserRequest, User.class);
+        User user =  updateUserRequestMapper.updateUserRequestDtoToUser(updateUserRequest);
         userRepository.save(user);
     }
 
@@ -45,7 +56,6 @@ public class UserManager implements UserService {
     public void delete(DeleteUserRequest deleteUserRequest) {
         User user = getUser(deleteUserRequest.getId());
         userRepository.delete(user);
-        System.out.println("User deletion is successful");
     }
 
 
@@ -74,9 +84,7 @@ public class UserManager implements UserService {
         var users = userRepository.findAll();
         var usersList = users
                 .stream()
-                .map(user -> modelMapperService
-                        .forResponse()
-                        .map(user, GetAllUsersResponse.class))
+                .map(getAllUserResponseMapper::userToGetAllUserResponseDto)
                 .toList();
         return usersList;
     }
@@ -85,9 +93,7 @@ public class UserManager implements UserService {
     @Override
     public GetUserByIdResponse getById(int id) {
         var user = getUser(id);
-        return modelMapperService
-                .forResponse()
-                .map(user, GetUserByIdResponse.class);
+        return getUserByIdResponseMapper.userToGetUserByIdResponseDto(user);
     }
 
     @Override
@@ -95,9 +101,7 @@ public class UserManager implements UserService {
         var user = userRepository
                 .findByUsername(name)
                 .orElseThrow(() -> new BusinessException(Messages.USER_NOT_FOUND));
-        return modelMapperService
-                .forResponse()
-                .map(user, GetUserByNameResponse.class);
+        return getUserByNameResponseMapper.userToGetUserByNameResponseDto(user);
     }
 
 
@@ -113,7 +117,7 @@ public class UserManager implements UserService {
     }
     private void checkIsUserAManager(int managerId) {
         var manager = userRepository.findById(managerId).orElseThrow();
-        if (!manager.getRole().getName().equals("manager")) {
+        if (!manager.getRole().getName().equals("MANAGER")) {
             throw  new BusinessException(Messages.USER_IS_NOT_A_MANAGER);
         }
     }

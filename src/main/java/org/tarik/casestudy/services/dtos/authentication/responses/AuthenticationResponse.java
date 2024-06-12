@@ -13,7 +13,6 @@ import org.tarik.casestudy.entities.concretes.User;
 public class AuthenticationResponse {
     private int id;
     private String accessToken;
-
     private String refreshToken;
     private User user;
 

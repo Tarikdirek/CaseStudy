@@ -16,6 +16,9 @@ import org.tarik.casestudy.services.dtos.authentication.requests.LoginRequest;
 import org.tarik.casestudy.services.dtos.authentication.requests.RegisterRequest;
 import org.tarik.casestudy.services.dtos.authentication.responses.AuthenticationResponse;
 import org.tarik.casestudy.services.dtos.user.requests.AddUserRequest;
+import org.tarik.casestudy.services.dtos.user.responses.GetUserByNameResponse;
+import org.tarik.casestudy.services.mappers.userMappers.requests.AddUserRequestMapper;
+import org.tarik.casestudy.services.mappers.userMappers.responses.GetUserByNameResponseMapper;
 
 @Service
 @AllArgsConstructor
@@ -29,12 +32,14 @@ public class AuthManager implements AuthService {
     private final ModelMapperService modelMapperService;
 
     private final AuthenticationManager authenticationManager;
+    private final AddUserRequestMapper addUserRequestMapper;
+    private final GetUserByNameResponseMapper getUserByNameResponseMapper;
     @Override
     public AuthenticationResponse login(LoginRequest loginRequest) {
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         var user = userService.getByName(loginRequest.getUsername());
-        var mappedUser = modelMapperService.forResponse().map(user, User.class);
+        var mappedUser = getUserByNameResponseMapper.getUserByNameResponseDtoToUser(user);
         var jwtToken = jwtService.generateToken(mappedUser);
         var refreshToken = jwtService.generateRefreshToken(mappedUser);
         return AuthenticationResponse.builder()
@@ -53,7 +58,7 @@ public class AuthManager implements AuthService {
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .role(role)
                 .build();
-        var userDto = modelMapperService.forRequest().map(user, AddUserRequest.class);
+        var userDto = addUserRequestMapper.userToAddUserRequestDto(user);
         userService.add(userDto);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

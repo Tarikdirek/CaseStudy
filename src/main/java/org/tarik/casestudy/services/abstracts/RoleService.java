@@ -1,5 +1,6 @@
 package org.tarik.casestudy.services.abstracts;
 
+import org.tarik.casestudy.entities.concretes.Role;
 import org.tarik.casestudy.services.dtos.role.requests.AddRoleRequest;
 import org.tarik.casestudy.services.dtos.role.requests.DeleteRoleRequest;
 import org.tarik.casestudy.services.dtos.role.requests.UpdateRoleRequest;
@@ -15,4 +16,5 @@ public interface RoleService {
 
     List<GetAllRolesResponse> getAll();
     GetRoleByIdResponse getById(int id);
+    Role getByName(String name);
 }

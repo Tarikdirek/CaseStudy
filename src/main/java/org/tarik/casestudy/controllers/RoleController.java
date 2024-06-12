@@ -3,6 +3,7 @@ package org.tarik.casestudy.controllers;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.tarik.casestudy.entities.concretes.Role;
 import org.tarik.casestudy.services.abstracts.RoleService;
 import org.tarik.casestudy.services.dtos.role.requests.AddRoleRequest;
 import org.tarik.casestudy.services.dtos.role.requests.DeleteRoleRequest;
@@ -38,5 +39,9 @@ public class RoleController {
     @GetMapping("/getbyid")
     public GetRoleByIdResponse getById(int id) {
         return roleService.getById(id);
+    }
+    @GetMapping("/getbyname")
+    public Role getByName(String name) {
+        return roleService.getByName(name);
     }
 }
